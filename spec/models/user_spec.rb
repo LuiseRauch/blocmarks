@@ -1,7 +1,8 @@
 require 'rails_helper'
+include RandomData
 
 RSpec.describe User, type: :model do
-  let(:user) { User.create!(username: "Blocmarks User", email: "user@blocmarks.com", password: "helloworld") }
+  let(:user) { create(:user) }
   # Shoulda tests for username
   it { should validate_presence_of(:username) }
   # Shoulda tests for email
