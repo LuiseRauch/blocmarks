@@ -10,10 +10,13 @@ source 'https://rubygems.org'
 
  group :development do
    gem 'sqlite3'
+   gem 'quiet_assets'
  end
 
  group :development, :test do
    gem 'rspec-rails', '~> 3.0'
+   gem 'shoulda'
+   gem 'factory_girl_rails', '~> 4.0'
  end
 
  # Use SCSS for stylesheets
@@ -27,3 +30,5 @@ source 'https://rubygems.org'
  # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
  gem 'turbolinks'
  gem 'bootstrap-sass'
+ gem 'devise'
+ gem 'figaro', '1.0'
