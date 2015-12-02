@@ -20,4 +20,9 @@ module RandomData
     last_name = random_word.capitalize
     "#{first_name} #{last_name}"
   end
+
+  def random_url
+    url = random_word
+    "#{url}.com"
+  end
 end
