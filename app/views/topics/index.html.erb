@@ -1,0 +1,6 @@
+<h1 class="text-center">All Blocmarks</h1>
+<div class="text-center">
+  <% @topics.each do |topic| %>
+    <p><%= link_to topic.title, topic %></p>
+    <% end %>
+</div>
