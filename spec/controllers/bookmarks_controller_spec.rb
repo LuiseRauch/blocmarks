@@ -2,8 +2,7 @@ require 'rails_helper'
 include RandomData
 
 RSpec.describe BookmarksController, type: :controller do
-  #let (:my_topic) { create(:topic) }
-  let (:my_topic) { Topic.create!(title:  RandomData.random_sentence) }
+  let (:my_topic) { create(:topic) }
   let (:my_bookmark) { create(:bookmark) }
 
   describe "GET #show" do

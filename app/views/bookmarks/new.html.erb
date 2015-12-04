@@ -3,13 +3,7 @@
   <div class="col-md-8">
     <div class="form-inline">
       <%= form_for [@topic, @bookmark] do |f| %>
-        <div class="form-group">
-          <%= f.label :url %>
-          <%= f.text_field :url %>
-        </div>
-        <div class="form-group">
-          <%= f.submit "Save", class: 'btn btn-success' %>
-        </div>
+        <%= render partial: 'form', locals: { f: f, topic: @bookmark.topic } %>
       <% end %>
     </div>
   </div>
