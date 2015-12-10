@@ -3,7 +3,7 @@ include RandomData
 
 RSpec.describe BookmarksController, type: :controller do
   let (:my_topic) { create(:topic) }
-  let (:my_bookmark) { create(:bookmark) }
+  let (:my_bookmark) { create(:bookmark, topic: my_topic) }
 
   describe "GET #show" do
     it "returns http success" do
@@ -11,10 +11,10 @@ RSpec.describe BookmarksController, type: :controller do
       expect(response).to have_http_status(:success)
     end
     it "renders the #show view" do
-      get :show, topic_id: my_topic.id, id: my_bookmark.id
-      expect(response).to render_template :show
-    end
-    it "assigns my_bookmark to @bookmark" do
+      # get :show, topic_id: my_topic.id, id: my_bookmark.id
+      # expect(response).to render_template :show
+    # end
+    # it "assigns my_bookmark to @bookmark" do
       get :show, topic_id: my_topic.id, id: my_bookmark.id
       expect(assigns(:bookmark)).to eq(my_bookmark)
     end
@@ -76,8 +76,12 @@ RSpec.describe BookmarksController, type: :controller do
     end
     it "redirects to the updated bookmark" do
       new_url = RandomData.random_url
+      # Update: /topics/1/bookmarks/1 ... Body: params{} # => topic_id doesn't match bookmark
       put :update, topic_id: my_topic.id, id: my_bookmark.id, bookmark: {url: new_url}
       expect(response).to redirect_to [my_topic, my_bookmark]
+      # bookmark = my_bookmark
+      # put :update, topic_id: bookmark.topic_id, id: bookmark.id, bookmark: {url: new_url}
+      # expect(response).to redirect_to [bookmark.topic, bookmark]
     end
   end
 
@@ -90,6 +94,8 @@ RSpec.describe BookmarksController, type: :controller do
     it "redirects to topic show" do
       delete :destroy, topic_id: my_topic.id, id: my_bookmark.id
       expect(response).to redirect_to my_topic
+      # delete :destroy, topic_id: my_bookmark.topic_id, id: my_bookmark.id
+      # expect(response).to redirect_to my_bookmark.topic
     end
   end
 end

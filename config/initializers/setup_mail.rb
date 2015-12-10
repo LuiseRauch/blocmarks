@@ -29,7 +29,7 @@ if Rails.env.development? || Rails.env.production?
     address:           'smtp.mailgun.org',
     user_name:         ENV['MAILGUN_SMTP_LOGIN'],
     password:          ENV['MAILGUN_SMTP_PASSWORD'],
-    domain:            'appba90049adcf64a449d9a8b8c24d8faa3.mailgun.org',
+    domain:            'sandbox86260cecda834949b3642d8f70c2f614.mailgun.org',
     authentication:    :plain,
     content_type:      'text/html'
   }
@@ -42,13 +42,13 @@ ActionMailer::Base.raise_delivery_errors = true
 # This interceptor just makes sure that local mail
 # only emails you.
 # http://edgeguides.rubyonrails.org/action_mailer_basics.html#intercepting-emails
-# class DevelopmentMailInterceptor
-#   def self.delivering_email(message)
-#     message.to =  'luise.rauch@gmail.com'
-#     message.cc = nil
-#     message.bcc = nil
-#   end
-# end
+class DevelopmentMailInterceptor
+  def self.delivering_email(message)
+    message.to =  'luise.rauch@gmail.com'
+    message.cc = nil
+    message.bcc = nil
+  end
+end
 
 # Locally, outgoing mail will be 'intercepted' by the
 # above DevelopmentMailInterceptor before going out

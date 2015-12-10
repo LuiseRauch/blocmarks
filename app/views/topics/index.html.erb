@@ -2,17 +2,19 @@
   <div class="span9">
     <h1>All Blocmarks</h1>
     <%= link_to "New Topic", new_topic_path, class: 'btn btn-success' %>
-  </div><br>
-  <div class="row">
-    <div class="span9">
-      <% @topics.each do |topic| %>
-        <h3><%= link_to topic.title, topic %></h3>
-        <div>
-          <% topic.bookmarks.each do |bookmark| %>
-            <%= link_to bookmark.url, topic_bookmark_path(topic, bookmark) %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
   </div>
 </div>
+<br>
+
+<% @topics.each do |topic| %>
+  <div class="row text-center">
+    <div class="col-md-12">
+      <h3><%= link_to topic.title, topic %></h3>
+    </div>
+    <% topic.bookmarks.each do |bookmark| %>
+      <div class="col-md-3">
+        <%= link_to bookmark.url, topic_bookmark_path(topic, bookmark) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
