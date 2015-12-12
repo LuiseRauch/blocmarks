@@ -9,12 +9,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   has_many :topics
-
-  validates :username,
-  :presence => true,
-  :uniqueness => {
-    :case_sensitive => false
-  } # etc.
+  has_many :bookmarks
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup

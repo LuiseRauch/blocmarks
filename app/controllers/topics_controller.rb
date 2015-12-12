@@ -1,6 +1,8 @@
 class TopicsController < ApplicationController
+
   def index
     @topics = Topic.all
+
   end
 
   def show
@@ -9,11 +11,13 @@ class TopicsController < ApplicationController
 
   def new
     @topic = Topic.new
+    authorize @topic
   end
 
   def create
     @topic = Topic.new
     @topic.title = params[:topic][:title]
+    authorize @topic
 
     if @topic.save
       flash[:notice] = "Topic was saved."
@@ -26,11 +30,13 @@ class TopicsController < ApplicationController
 
   def edit
     @topic = Topic.find(params[:id])
+    authorize @topic
   end
 
   def update
     @topic = Topic.find(params[:id])
     @topic.title = params[:topic][:title]
+    authorize @topic
 
     if @topic.save
       flash[:notice] = "Topic was updated."
@@ -43,6 +49,7 @@ class TopicsController < ApplicationController
 
   def destroy
     @topic = Topic.find(params[:id])
+    authorize @topic
 
     if @topic.destroy
       flash[:notice] = "\"#{@topic.title}\" was deleted successfully."

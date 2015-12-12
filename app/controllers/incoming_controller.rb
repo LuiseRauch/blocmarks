@@ -9,10 +9,7 @@ def create
   incoming_topic = params[:subject]
 
   # create new user if not existing
-
   bookmark_user = User.find_or_create_by!(:email => incoming_email)
-  bookmark_user.email
-  bookmark_user.save!
 
   # create new topic if not existing
   bookmark_topic = Topic.find_or_initialize_by(:title => incoming_topic)
