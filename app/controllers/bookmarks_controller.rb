@@ -14,7 +14,7 @@ class BookmarksController < ApplicationController
     @bookmark.url = params[:bookmark][:url]
     @topic = Topic.find(params[:topic_id])
     @bookmark.topic = @topic
-    # @bookmark.user = current_user
+    @bookmark.user = current_user
     authorize @bookmark
 
     if @bookmark.save

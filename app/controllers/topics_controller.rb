@@ -2,7 +2,6 @@ class TopicsController < ApplicationController
 
   def index
     @topics = Topic.all
-
   end
 
   def show
@@ -17,6 +16,7 @@ class TopicsController < ApplicationController
   def create
     @topic = Topic.new
     @topic.title = params[:topic][:title]
+    @topic.user = current_user
     authorize @topic
 
     if @topic.save
