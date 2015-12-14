@@ -1,0 +1,20 @@
+<div class="row text-center">
+  <h2>My Blocmarks</h2>
+    <% @user_bookmarks.each do |bookmark| %>
+    <div class="col-md-3">
+      <strong><%= bookmark.topic.title %></strong><br />
+      <%= link_to bookmark.url, bookmark.url %>
+      <%= render partial: 'likes/like', locals: { bookmark: bookmark } %>
+    </div>
+    <% end %>
+  </div>
+<div class="row text-center">
+  <h2>Liked Blocmarks</h2>
+        <% @user_liked_bookmarks.each do |bookmark| %>
+        <div class="col-md-3">
+        <strong><%= bookmark.topic.title %></strong><br />
+        <%= link_to bookmark.url, bookmark.url %>
+        <%= render partial: 'likes/like', locals: { bookmark: bookmark } %>
+      </div>
+        <% end %>
+</div>
