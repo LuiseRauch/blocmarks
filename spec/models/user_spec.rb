@@ -3,8 +3,8 @@ include RandomData
 
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
+  it { should have_many(:likes) }
   # Shoulda tests for username
-
   # it { should validate_presence_of(:username) }
   # Shoulda tests for email
   it { should validate_presence_of(:email) }
