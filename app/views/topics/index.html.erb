@@ -13,7 +13,14 @@
     </div>
     <% topic.bookmarks.each do |bookmark| %>
       <div class="col-md-3">
-        <%= link_to bookmark.url, topic_bookmark_path(topic, bookmark) %>
+        <div class="row">
+          <%= link_to bookmark.url, topic_bookmark_path(topic, bookmark) %>
+        </div>
+        <div class="row">
+          <%= render partial: 'likes/like', locals: { topic: @topic, bookmark: bookmark } %>
+          <%= link_to "Edit", edit_topic_bookmark_path(topic, bookmark), class: 'btn btn-success btn-xs' %>
+          <%= link_to "Delete Bookmark", [topic, bookmark], method: :delete, class: 'btn btn-danger btn-xs', data: { confirm: 'Are you sure you want to delete this bookmark?' } %>
+        </div>
       </div>
     <% end %>
   </div>
