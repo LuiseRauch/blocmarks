@@ -1,7 +1,11 @@
+require 'embedly'
+require 'json'
+
 class TopicsController < ApplicationController
 
   def index
     @topics = Topic.all
+    #EmbedlyHelper
   end
 
   def show
