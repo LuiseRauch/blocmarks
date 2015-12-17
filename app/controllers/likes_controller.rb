@@ -1,11 +1,12 @@
 class LikesController < ApplicationController
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
-    like = current_user.likes.build(bookmark: @bookmark)
-    @like = like
+    # @like = current_user.likes.build(bookmark: @bookmark)
+    @like = Like.new(bookmark: @bookmark, user: current_user)
+    # @like = like
     authorize @like
 
-      if like.save
+      if @like.save
         # Add code to generate a success flash and redirect to @bookmark
         flash[:notice] = "Bookmark liked."
       else
@@ -19,11 +20,12 @@ class LikesController < ApplicationController
     # Get the bookmark from the params
     # Find the current user's like with the ID in the params
     @bookmark = Bookmark.find(params[:bookmark_id])
-    like = current_user.likes.find(params[:id])
-    @like = like
+    # @like = current_user.likes.find(params[:id])
+    @like = Like.find(params[:id])
+    # @like = like
     authorize @like
 
-      if like.destroy
+      if @like.destroy
         # Flash success and redirect to @bookmark
         flash[:notice] = "Bookmark unliked."
       else

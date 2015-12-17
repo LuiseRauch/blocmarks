@@ -4,7 +4,8 @@ require 'json'
 class TopicsController < ApplicationController
 
   def index
-    @topics = Topic.all
+    # @topics = Topic.all
+    @topics = policy_scope(Topic)
     #EmbedlyHelper
   end
 
