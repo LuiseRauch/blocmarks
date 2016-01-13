@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   has_many :topics
-  has_many :bookmarks, dependent: :destroy#, class_name: 'Bookmark', foreign_key: 'user_id'
+  has_many :bookmarks, dependent: :destroy #, class_name: 'Bookmark', foreign_key: 'user_id'
   has_many :likes, dependent: :destroy
   has_many :liked_bookmarks, through: :likes, source: :bookmark
 

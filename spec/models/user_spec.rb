@@ -36,4 +36,15 @@ RSpec.describe User, type: :model do
       expect(user_with_invalid_email_format).to_not be_valid
     end
   end
+
+
+  describe "admin user" do
+    before do
+      user.admin!
+    end
+
+    it "should return true for #admin?" do
+      expect(user.admin?).to be_truthy
+    end
+  end
 end
