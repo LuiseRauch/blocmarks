@@ -19,6 +19,9 @@ RSpec.describe User, type: :model do
     it "should respond to email" do
       expect(user).to respond_to(:email)
     end
+    it "should respond to admin?" do
+      expect(user).to respond_to(:admin?)
+    end
   end
 
   describe "invalid user" do
@@ -40,7 +43,7 @@ RSpec.describe User, type: :model do
 
   describe "admin user" do
     before do
-      user.admin!
+      user.update_attributes(admin: true)
     end
 
     it "should return true for #admin?" do
