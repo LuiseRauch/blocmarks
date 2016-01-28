@@ -4,8 +4,9 @@ class UsersController < ApplicationController
     @user = current_user
     @user_bookmarks = @user.bookmarks.order(:topic_id)
     @user_bookmarks_topics = @user_bookmarks.collect(&:topic)
-    #@user_liked_bookmarks = @user.likes.collect(&:bookmark)
-    @user_liked_bookmarks = @user.liked_bookmarks.order(:topic_id)
-    @user_liked_bookmarks_topics = @user_liked_bookmarks.collect(&:topic)
+    @user_liked_bookmarks = @user.likes.collect(&:bookmark)
+
+    # @user_liked_bookmarks = @user.liked_bookmarks.order(:topic_id)
+    # @user_liked_bookmarks_topics = @user_liked_bookmarks.collect(&:topic)
   end
 end

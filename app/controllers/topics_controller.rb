@@ -6,7 +6,7 @@ class TopicsController < ApplicationController
   def index
     # @topics = Topic.all
     @topics = policy_scope(Topic)
-    #EmbedlyHelper
+    EmbedlyHelper
   end
 
   def show
