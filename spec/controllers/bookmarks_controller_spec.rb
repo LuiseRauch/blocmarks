@@ -3,7 +3,7 @@ include RandomData
 
 RSpec.describe BookmarksController, type: :controller do
   let (:my_user) { create(:user) }
-  let (:my_topic) { create(:topic) }
+  let (:my_topic) { create(:topic, user: my_user) }
   let (:my_bookmark) { create(:bookmark, topic: my_topic, user: my_user) }
 
   context "guest" do

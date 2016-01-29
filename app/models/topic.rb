@@ -6,4 +6,7 @@ class Topic < ActiveRecord::Base
   has_many :bookmarks, dependent: :destroy
 
   scope :recent, -> { where('created_at > ?', 1.week.ago) }
+
+  validates :title, length: { minimum: 1, maximum: 100 }, presence: true
+  validates :user, presence: true
 end

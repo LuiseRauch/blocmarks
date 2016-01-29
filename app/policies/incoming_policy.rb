@@ -1,0 +1,2 @@
+class IncomingPolicy < ApplicationPolicy
+end
