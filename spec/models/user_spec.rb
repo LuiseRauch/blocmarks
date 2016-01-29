@@ -4,8 +4,8 @@ include RandomData
 RSpec.describe User, type: :model do
   let(:user) { create(:user) }
   it { should have_many(:likes) }
-  # Shoulda tests for username
-  # it { should validate_presence_of(:username) }
+  # Shoulda tests for login
+  # it { should validate_presence_of(:login) }
   # Shoulda tests for email
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email) }
@@ -39,7 +39,6 @@ RSpec.describe User, type: :model do
       expect(user_with_invalid_email_format).to_not be_valid
     end
   end
-
 
   describe "admin user" do
     before do

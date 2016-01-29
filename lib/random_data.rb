@@ -23,6 +23,6 @@ module RandomData
 
   def random_url
     url = random_word
-    "#{url}.com"
+    "http://#{url}.com"
   end
 end
