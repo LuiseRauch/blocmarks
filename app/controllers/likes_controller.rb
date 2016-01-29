@@ -13,7 +13,7 @@ class LikesController < ApplicationController
         # Add code to generate a failure flash and redirect to @bookmark
         flash[:error] = "Liking failed."
       end
-        redirect_to [@bookmark]
+        redirect_to(:back)
   end
 
   def destroy
@@ -32,6 +32,6 @@ class LikesController < ApplicationController
         # Flash error and redirect to @bookmark
         flash.now[:alert] = "Unliking failed."
       end
-        redirect_to [@bookmark]
+        redirect_to(:back)
   end
 end

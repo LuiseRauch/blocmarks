@@ -6,11 +6,11 @@ class TopicsController < ApplicationController
   def index
     # @topics = Topic.all
     @topics = policy_scope(Topic)
-    EmbedlyHelper
+    # EmbedlyHelper
   end
 
   def show
-     @topic = Topic.find(params[:id])
+     @topic = Topic.friendly.find(params[:id])
   end
 
   def new
@@ -34,12 +34,12 @@ class TopicsController < ApplicationController
   end
 
   def edit
-    @topic = Topic.find(params[:id])
+    @topic = Topic.friendly.find(params[:id])
     authorize @topic
   end
 
   def update
-    @topic = Topic.find(params[:id])
+    @topic = Topic.friendly.find(params[:id])
     @topic.title = params[:topic][:title]
     authorize @topic
 
@@ -53,7 +53,7 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    @topic = Topic.find(params[:id])
+    @topic = Topic.friendly.find(params[:id])
     authorize @topic
 
     if @topic.destroy

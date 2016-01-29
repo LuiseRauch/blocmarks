@@ -6,7 +6,7 @@ skip_before_action :verify_authenticity_token, only: [:create]
 
 def create
   # assume that email body consists of url only
-  incoming_url = params[:"body-plain"]
+  incoming_url = params[:"stripped-text"]
   incoming_email = params[:sender]
   incoming_topic = params[:subject]
 
@@ -22,7 +22,11 @@ def create
   bookmark_topic.save!
 
   # create new bookmark if not existing
-  @bookmark = Bookmark.find_or_create_by!(:url => incoming_url, :topic_id => bookmark_topic.id)
+  @bookmark = Bookmark.find_or_create_by(:url => incoming_url, :topic_id => bookmark_topic.id)
+  # send email if not correctly fromatted
+  if !@bookmark.persisted? || @bookmark.nil?
+    UrlMailer.oops(bookmark_user, incoming_url).deliver_now
+  end
 
   # Assuming all went well.
   head 200
