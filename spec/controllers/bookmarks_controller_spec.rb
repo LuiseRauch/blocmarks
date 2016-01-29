@@ -7,21 +7,6 @@ RSpec.describe BookmarksController, type: :controller do
   let (:my_bookmark) { create(:bookmark, topic: my_topic, user: my_user) }
 
   context "guest" do
-    describe "GET #show" do
-      it "returns http success" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(response).to have_http_status(:success)
-      end
-      it "renders the #show view" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(response).to render_template :show
-      end
-      it "assigns my_bookmark to @bookmark" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(assigns(:bookmark)).to eq(my_bookmark)
-      end
-    end
-
     describe "GET new" do
       it "returns http redirect" do
         get :new, topic_id: my_topic.id
@@ -65,21 +50,6 @@ RSpec.describe BookmarksController, type: :controller do
       other_user = User.new(username: "Test User", email: "test@example.com", password: "helloworld", password_confirmation: "helloworld")
       other_user.confirm
       sign_in other_user
-    end
-
-    describe "GET #show" do
-      it "returns http success" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(response).to have_http_status(:success)
-    end
-    it "renders the #show view" do
-      get :show, topic_id: my_topic.id, id: my_bookmark.id
-      expect(response).to render_template :show
-    end
-    it "assigns my_bookmark to @bookmark" do
-      get :show, topic_id: my_topic.id, id: my_bookmark.id
-      expect(assigns(:bookmark)).to eq(my_bookmark)
-      end
     end
 
     describe "GET #new" do
@@ -139,21 +109,6 @@ RSpec.describe BookmarksController, type: :controller do
     before do
       my_user.confirm
       sign_in my_user
-    end
-
-    describe "GET #show" do
-      it "returns http success" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(response).to have_http_status(:success)
-      end
-      it "renders the #show view" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(response).to render_template :show
-      end
-      it "assigns my_bookmark to @bookmark" do
-        get :show, topic_id: my_topic.id, id: my_bookmark.id
-        expect(assigns(:bookmark)).to eq(my_bookmark)
-      end
     end
 
     describe "GET #new" do

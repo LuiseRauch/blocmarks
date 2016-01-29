@@ -11,6 +11,12 @@
   <% @topic.bookmarks.each do |bookmark| %>
     <div class="col-md-3">
       <div class="row">
+        <div class="thumbnail">
+          <% embedly = display(bookmark.url) %>
+          <%= link_to embedly[:url], :target => '_blank' do %>
+              <%= image_tag embedly[:thumbnail_url] %>
+          <% end %>
+        </div>
         <%= link_to bookmark.url, bookmark.url %>
       </div>
       <div class="row">
