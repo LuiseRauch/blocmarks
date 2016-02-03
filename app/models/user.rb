@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :liked_bookmarks, through: :likes, source: :bookmark
 
+  # after_destroy :method_name
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)

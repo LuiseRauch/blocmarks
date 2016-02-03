@@ -23,10 +23,10 @@ def create
 
   # create new bookmark if not existing
   @bookmark = Bookmark.find_or_create_by(:url => incoming_url, :topic_id => bookmark_topic.id, :user_id => bookmark_user.id)
-  authorize @bookmark
+  # authorize @bookmark # will fail because user.present? false
   # send email if not correctly fromatted
   if !@bookmark.persisted? || @bookmark.nil?
-    UrlMailer.oops(bookmark_user, incoming_url).deliver_now
+    UrlMailer.oops(bookmark_user, @bookmark).deliver_now
   end
   # Assuming all went well.
   head 200
