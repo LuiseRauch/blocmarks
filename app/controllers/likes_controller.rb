@@ -13,7 +13,11 @@ class LikesController < ApplicationController
         # Add code to generate a failure flash and redirect to @bookmark
         flash[:error] = "Liking failed."
       end
+      if request.referer.present?
         redirect_to(:back)
+      else
+        # ...
+      end
   end
 
   def destroy
