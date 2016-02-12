@@ -55,9 +55,14 @@ class TopicsController < ApplicationController
     @topic = Topic.friendly.find(params[:id])
     authorize @topic
 
-    if @topic.destroy
-      flash[:notice] = "\"#{@topic.title}\" was deleted successfully."
-      redirect_to topics_path
+    if @topic.destroy_if_no_bookmarks
+      if Topic.exists?(id: @topic.id)
+        flash[:notice] = "\"#{@topic.title}\" can not be deleted because other users added links, but we have deleted your bookmarks."
+        redirect_to @topic
+      else
+        flash[:notice] = "\"#{@topic.title}\" was deleted successfully."
+        redirect_to topics_path
+      end
     else
       flash[:error] = "There was an error deleting the topic."
       render :show

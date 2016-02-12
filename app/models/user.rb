@@ -4,6 +4,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
+
+   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
@@ -13,7 +16,14 @@ class User < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :liked_bookmarks, through: :likes, source: :bookmark
 
-  # after_destroy :method_name
+  after_destroy :reassign_topics_to_new_users
+
+  validates :password, presence: true, length: { minimum: 6 }
+  validates :email,
+          presence: true,
+          uniqueness: { case_sensitive: false },
+          length: { minimum: 3, maximum: 100 },
+          format: { with: EMAIL_REGEX }
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
@@ -29,13 +39,15 @@ class User < ActiveRecord::Base
     likes.where(bookmark_id: bookmark.id).first
   end
 
-  EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
-
-  # validates :login, length: { minimum: 1, maximum: 100 }, presence: true
-  validates :password, presence: true, length: { minimum: 6 }
-  validates :email,
-          presence: true,
-          uniqueness: { case_sensitive: false },
-          length: { minimum: 3, maximum: 100 },
-          format: { with: EMAIL_REGEX }
+  def reassign_topics_to_new_users
+    topics = self.topics
+    topics.each do |topic|
+      if topic.bookmarks.where.not(user_id: self.id).any?
+        topic.user_id = topic.bookmarks.where.not(user_id: self.id).first.user_id
+        topic.save
+      else
+        topic.destroy
+      end
+    end
+  end
 end

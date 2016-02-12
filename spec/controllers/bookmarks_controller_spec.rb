@@ -75,9 +75,9 @@ RSpec.describe BookmarksController, type: :controller do
         post :create, topic_id: my_topic.id, bookmark: {url: RandomData.random_url}
         expect(assigns(:bookmark)).to eq Bookmark.last
       end
-      it "redirects to the new bookmark" do
+      it "redirects to the topic" do
         post :create, topic_id: my_topic.id, bookmark: {url: RandomData.random_url}
-        expect(response).to redirect_to [my_topic, Bookmark.last]
+        expect(response).to redirect_to my_topic
       end
     end
 
@@ -134,9 +134,9 @@ RSpec.describe BookmarksController, type: :controller do
         post :create, topic_id: my_topic.id, bookmark: {url: RandomData.random_url}
         expect(assigns(:bookmark)).to eq Bookmark.last
       end
-      it "redirects to the new bookmark" do
+      it "redirects to the topic" do
         post :create, topic_id: my_topic.id, bookmark: {url: RandomData.random_url}
-        expect(response).to redirect_to [my_topic, Bookmark.last]
+        expect(response).to redirect_to my_topic
       end
     end
 
@@ -165,11 +165,11 @@ RSpec.describe BookmarksController, type: :controller do
         expect(updated_bookmark.id).to eq my_bookmark.id
         expect(updated_bookmark.url).to eq new_url
       end
-      it "redirects to the updated bookmark" do
+      it "redirects back" do
         new_url = RandomData.random_url
         # Update: /topics/1/bookmarks/1 ... Body: params{} # => topic_id doesn't match bookmark
         put :update, topic_id: my_topic.id, id: my_bookmark.id, bookmark: {url: new_url}
-        expect(response).to redirect_to [my_topic, my_bookmark]
+        expect(response).to redirect_to my_topic
         # bookmark = my_bookmark
         # put :update, topic_id: bookmark.topic_id, id: bookmark.id, bookmark: {url: new_url}
         # expect(response).to redirect_to [bookmark.topic, bookmark]

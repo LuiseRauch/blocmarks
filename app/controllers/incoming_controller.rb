@@ -22,7 +22,10 @@ def create
   bookmark_topic.save!
 
   # create new bookmark if not existing
-  @bookmark = Bookmark.find_or_create_by(:url => incoming_url, :topic_id => bookmark_topic.id, :user_id => bookmark_user.id)
+  @bookmark = Bookmark.find_or_initialize_by(:url => incoming_url, :topic_id => bookmark_topic.id)
+  @bookmark.user_id ||= bookmark_user.id
+  @bookmark.save!
+
   # authorize @bookmark # will fail because user.present? false
   # send email if not correctly fromatted
   if !@bookmark.persisted? || @bookmark.nil?
