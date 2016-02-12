@@ -27,6 +27,7 @@ def create
   @bookmark.save!
 
   # authorize @bookmark # will fail because user.present? false
+  
   # send email if not correctly fromatted
   if !@bookmark.persisted? || @bookmark.nil?
     UrlMailer.oops(bookmark_user, @bookmark).deliver_now
