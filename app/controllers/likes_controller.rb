@@ -2,7 +2,7 @@ class LikesController < ApplicationController
   def create
     @bookmark = Bookmark.find(params[:bookmark_id])
     # @like = current_user.likes.build(bookmark: @bookmark)
-    @like = Like.new(bookmark: @bookmark, user: current_user)
+    @like = Like.find_or_initialize_by(bookmark: @bookmark, user: current_user)
     # @like = like
     authorize @like
 
@@ -13,10 +13,11 @@ class LikesController < ApplicationController
         # Add code to generate a failure flash and redirect to @bookmark
         flash[:error] = "Liking failed."
       end
+
       if request.referer.present?
         redirect_to(:back)
       else
-        # ...
+        redirect_to [@bookmark.topic]
       end
   end
 
@@ -36,6 +37,11 @@ class LikesController < ApplicationController
         # Flash error and redirect to @bookmark
         flash.now[:alert] = "Unliking failed."
       end
+      
+      if request.referer.present?
         redirect_to(:back)
+      else
+        redirect_to [@bookmark.topic]
+      end
   end
 end
