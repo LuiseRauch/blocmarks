@@ -106,6 +106,6 @@ RSpec.describe IncomingController, type: :controller do
   end
 
   def post_params
-    {sender: "test@example.com", subject: "category", :'stripped-text' => "http://example.com"}
+    {sender: "test@example.com", subject: "category", :'body-plain' => "http://example.com"}
   end
 end

@@ -6,12 +6,12 @@ skip_before_action :verify_authenticity_token, only: [:create]
 
 def create
   # assume that email body consists of url only
-  incoming_url = params[:"stripped-text"]
+  incoming_url = params[:'body-plain']
   incoming_email = params[:sender]
   incoming_topic = params[:subject]
 
   # create new user if not existing
-  @bookmark_user = User.find_or_create_by!(:email => incoming_email) do |user|
+  bookmark_user = User.find_or_create_by!(:email => incoming_email) do |user|
     user.password = RandomData.random_sentence
     user.password_confirmation = user.password
   end
@@ -30,7 +30,7 @@ def create
 
   # send email if not correctly fromatted
   if !@bookmark.persisted? || @bookmark.nil?
-    UrlMailer.oops(@bookmark_user, @bookmark).deliver_now
+    UrlMailer.oops(bookmark_user, @bookmark).deliver_now
     # head 400
   end
   # Assuming all went well.
