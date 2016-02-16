@@ -66,7 +66,7 @@ RSpec.describe IncomingController, type: :controller do
 
     context "newly created user adding a bookmark to an existing topic" do
       before do
-        user = User.create!(email: "otheruser@example.com", password: "helloworld", password_confirmation: "helloworld")
+        user = User.create!(email: "newuser@example.com", password: "helloworld", password_confirmation: "helloworld")
         topic = Topic.create!(title: "category", user: user)
       end
 
@@ -85,6 +85,23 @@ RSpec.describe IncomingController, type: :controller do
         @bookmark = Bookmark.last
         expect(@bookmark.url).to eq("http://example.com")
       end
+    end
+  end
+
+  context "oops mail is sent" do
+
+    # let(:incorrectly_formatted_bookmark) {sender: "test@example.com", subject: "category", :'stripped-text' => "example.com"}
+    #
+    # it "sends an email if the url is not correctly fromatted" do
+    #   expect(UrlMailer).to receive(:oops).with(incorrectly_formatted_bookmark).and_return(double(deliver_now: true))
+    # end
+    #
+    # it "sends an email if the url already exists in this topic" do
+    #
+    # end
+
+    it "does not send emails to users with correct bookmarks" do
+      expect(UrlMailer).not_to receive(:oops)
     end
   end
 

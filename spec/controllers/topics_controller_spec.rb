@@ -366,6 +366,5 @@ RSpec.describe TopicsController, type: :controller do
         expect(response).to redirect_to topics_path
       end
     end
-
   end
 end
