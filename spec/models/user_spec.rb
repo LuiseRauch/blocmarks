@@ -49,4 +49,20 @@ RSpec.describe User, type: :model do
       expect(user.admin?).to be_truthy
     end
   end
+
+  describe "reassign_topics_to_new_users" do
+    let(:other_user) { create(:user) }
+    let(:my_topic) { create(:topic, user: user) }
+    let(:other_user_bookmark) { create(:bookmark, topic: my_topic, user: other_user) }
+
+    it "should reassign a topic to other_user" do
+      delete :destroy, {id: user.id}
+      expect(assigns(:user)).to eq(other_user)
+    end
+    it "should delete a topic if there is no user to reassign it to" do
+      delete :destroy, {id: user.id}
+      count = User.where({id: user.id}).size
+      expect(count).to eq 0
+    end
+  end
 end
