@@ -13,6 +13,8 @@ RSpec.describe Bookmark, type: :model do
   it { should validate_presence_of(:topic) }
   it { should validate_presence_of(:user) }
   it { should validate_presence_of(:url) }
+  it { should allow_value("http://example.com").for(:url) }
+  it { should_not allow_value("example.com").for(:url) }
 
   describe "attributes" do
     it "should respond to url" do

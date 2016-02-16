@@ -1,8 +1,18 @@
 <%= form_for @topic do |f| %>
-  <div class="form-group">
+  <% if topic.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(topic.errors.count, "error") %>.</h4>
+      <ul>
+        <% topic.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <%= form_group_tag(topic.errors[:title]) do %>
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control', placeholder: "Enter topic title" %>
-  </div>
+  <% end %>
   <div class="form-group">
     <%= f.submit "Save", class: 'btn btn-success' %>
   </div>

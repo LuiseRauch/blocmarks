@@ -1,15 +1,8 @@
 <h1>Edit Bookmark</h1>
 <div class="row">
   <div class="col-md-8">
-    <div class="form-inline">
-      <% if @bookmark.errors.any? %>
-        <div class="alert alert-danger">
-          <%= @bookmark.errors.full_messages.first %>
-        </div>
-        <% end %>
-      <%= form_for [@bookmark.topic, @bookmark] do |f| %>
-        <%= render partial: 'form', locals: { f: f, topic: @bookmark.topic } %>
-      <% end %>
-    </div>
+    <%= form_for [@bookmark.topic, @bookmark], html: {class: 'form-inline'} do |f| %>
+      <%= render partial: 'form', locals: { f: f, topic: @bookmark.topic } %>
+    <% end %>
   </div>
 </div>
