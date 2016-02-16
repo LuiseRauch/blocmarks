@@ -9,6 +9,6 @@ class UrlMailer < ActionMailer::Base
     @user = user
     @bookmark = bookmark
 
-    mail(to: @user.email, subject: "We couldn't add your bookmark #{bookmark.url}.")
+    mail(to: user.email, subject: "We couldn't add your bookmark #{bookmark.url}.")
   end
 end

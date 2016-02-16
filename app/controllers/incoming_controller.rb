@@ -11,7 +11,7 @@ def create
   incoming_topic = params[:subject]
 
   # create new user if not existing
-  @bookmark_user = User.find_or_create_by!(:email => incoming_email) do |user|
+  bookmark_user = User.find_or_create_by!(:email => incoming_email) do |user|
     user.password = RandomData.random_sentence
     user.password_confirmation = user.password
   end
@@ -30,7 +30,7 @@ def create
 
   # send email if not correctly fromatted
   if !@bookmark.persisted? || @bookmark.nil?
-    UrlMailer.oops(@bookmark_user, @bookmark).deliver_now
+    UrlMailer.oops(bookmark_user, @bookmark).deliver_now
     # head 400
   end
   # Assuming all went well.
