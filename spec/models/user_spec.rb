@@ -51,18 +51,22 @@ RSpec.describe User, type: :model do
   end
 
   describe "reassign_topics_to_new_users" do
-    let(:other_user) { create(:user) }
-    let(:my_topic) { create(:topic, user: user) }
-    let(:other_user_bookmark) { create(:bookmark, topic: my_topic, user: other_user) }
-
     it "should reassign a topic to other_user" do
-      delete :destroy, {id: user.id}
-      expect(assigns(:user)).to eq(other_user)
+      topic = create(:topic, user: user)
+      topic_count = Topic.count
+      other_user = User.create(email: "newuser@example.com", password: "helloworld", password_confirmation: "helloworld")
+      other_user_bookmark = create(:bookmark, topic: topic, user: other_user)
+      expect{user.destroy}.to_not change{Topic.count}
     end
     it "should delete a topic if there is no user to reassign it to" do
-      delete :destroy, {id: user.id}
-      count = User.where({id: user.id}).size
-      expect(count).to eq 0
+      topic = create(:topic, user: user)
+      topic_count = Topic.count
+      expect{user.destroy}.to change{Topic.count}.from(1).to(0)
+      # user.destroy
+      # expect(user.destroyed?).to eq true
+      # expect(topic.destroyed?).to eq true
+      # expect(Topic.count).to eq topic_count - 1
     end
   end
+
 end

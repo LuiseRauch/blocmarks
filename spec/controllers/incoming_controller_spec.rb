@@ -89,20 +89,29 @@ RSpec.describe IncomingController, type: :controller do
   end
 
   context "oops mail is sent" do
-
-    # let(:incorrectly_formatted_bookmark) {sender: "test@example.com", subject: "category", :'stripped-text' => "example.com"}
-    #
-    # it "sends an email if the url is not correctly fromatted" do
-    #   expect(UrlMailer).to receive(:oops).with(incorrectly_formatted_bookmark).and_return(double(deliver_now: true))
-    # end
-    #
-    # it "sends an email if the url already exists in this topic" do
-    #
-    # end
-
     it "does not send emails to users with correct bookmarks" do
-      expect(UrlMailer).not_to receive(:oops)
+      expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
     end
+    it "sends an email if the url already exists in this topic or is not correctly fromatted" do
+      expect { post :create, bad_post_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
+  context "ohno mail is sent" do
+    it "does not send emails to users with correct topics" do
+      expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
+    end
+    it "sends an email if the topic could not be saved" do
+      expect { post :create, bad_topic_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
+    end
+  end
+
+  def bad_topic_params
+    {sender: "test@example.com", subject: "", :'stripped-text' => "http://example.com"}
+  end
+
+  def bad_post_params
+    {sender: "test@example.com", subject: "category", :'stripped-text' => "example.com"}
   end
 
   def post_params
