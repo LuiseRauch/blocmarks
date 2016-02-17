@@ -19,7 +19,8 @@ class Topic < ActiveRecord::Base
     foreign_bookmarks = bookmarks.where.not(user_id: self.user_id)
     if foreign_bookmarks.none?
       self.destroy
+    else
+      return true
     end
-    return true
   end
 end

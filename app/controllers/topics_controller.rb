@@ -56,7 +56,8 @@ class TopicsController < ApplicationController
     authorize @topic
 
     if @topic.destroy_if_no_bookmarks
-      if Topic.exists?(id: @topic.id)
+      if !@topic.destroyed?
+      # if Topic.exists?(id: @topic.id)
         flash[:notice] = "\"#{@topic.title}\" can not be deleted because other users added links, but we have deleted your bookmarks."
         redirect_to @topic
       else
