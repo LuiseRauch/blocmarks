@@ -89,6 +89,10 @@ RSpec.describe IncomingController, type: :controller do
   end
 
   context "oops mail is sent" do
+    before do
+      user = User.create!(email: "test@example.com", password: "helloworld", password_confirmation: "helloworld")
+    end
+
     it "does not send emails to users with correct bookmarks" do
       expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
     end
@@ -98,6 +102,10 @@ RSpec.describe IncomingController, type: :controller do
   end
 
   context "ohno mail is sent" do
+    before do
+      user = User.create!(email: "test@example.com", password: "helloworld", password_confirmation: "helloworld")
+    end
+    
     it "does not send emails to users with correct topics" do
       expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
     end
