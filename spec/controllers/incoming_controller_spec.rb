@@ -88,29 +88,26 @@ RSpec.describe IncomingController, type: :controller do
     end
   end
 
-  context "oops mail is sent" do
+  context "mails are sent" do
     before do
       user = User.create!(email: "test@example.com", password: "helloworld", password_confirmation: "helloworld")
     end
 
-    it "does not send emails to users with correct bookmarks" do
-      expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
+    describe "oops mail is sent" do
+      it "sends an email if the url already exists in this topic or is not correctly fromatted" do
+        expect { post :create, bad_post_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
-    it "sends an email if the url already exists in this topic or is not correctly fromatted" do
-      expect { post :create, bad_post_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-  end
 
-  context "ohno mail is sent" do
-    before do
-      user = User.create!(email: "test@example.com", password: "helloworld", password_confirmation: "helloworld")
+    describe "ohno mail is sent" do
+      it "sends an email if the topic could not be saved" do
+        expect { post :create, bad_topic_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
+      end
     end
-    
-    it "does not send emails to users with correct topics" do
-      expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
-    end
-    it "sends an email if the topic could not be saved" do
-      expect { post :create, bad_topic_params}.to change { ActionMailer::Base.deliveries.count }.by(1)
+    describe "no mails are sent" do
+      it "does not send emails to users with correct bookmarks" do
+        expect { post :create, post_params }.to change { ActionMailer::Base.deliveries.count }.by(0)
+      end
     end
   end
 

@@ -43,21 +43,21 @@ RSpec.describe Devise::SessionsController, type: :controller do
       expect(response).to render_template :new
     end
   end
-  # describe "DELETE sessions/id" do
-  #   it "render the #welcome view" do
-  #     @request.env["devise.mapping"] = Devise.mappings[:user]
-  #     delete :destroy, id: my_user.id
-  #     expect(response).to redirect_to root_path
-  #   end
-  #   it "deletes the user's session" do
-  #     @request.env["devise.mapping"] = Devise.mappings[:user]
-  #     delete :destroy, id: my_user.id
-  #     expect(assigns(:session)).to be_nil
-  #   end
-  #   it "flashes #notice" do
-  #     @request.env["devise.mapping"] = Devise.mappings[:user]
-  #     delete :destroy, id: my_user.id
-  #     expect(flash[:notice]).to be_present
-  #   end
-  # end
+  describe "DELETE sessions/id" do
+    it "render the #welcome view" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      delete :destroy, id: my_user.id
+      expect(response).to redirect_to root_path
+    end
+    it "deletes the user's session" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      delete :destroy, id: my_user.id
+      expect(assigns(:session)).to be_nil
+    end
+    it "flashes #notice" do
+      @request.env["devise.mapping"] = Devise.mappings[:user]
+      delete :destroy, id: my_user.id
+      expect(flash[:notice]).to be_present
+    end
+  end
 end

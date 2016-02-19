@@ -22,22 +22,29 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to render_template :show
     end
 
-    it "renders the current_user #show view" do
+    it "renders the current_user #show view regardless of id" do
       get :show, id: 500
       expect(assigns(:user)).to eq my_user
     end
 
     it "returns my_users bookmarks" do
-      get :show, user_id: my_user.id, id: my_bookmark.id
+      my_bookmark
+      get :show, id: my_user.id
+      expect(assigns(:user_bookmarks)).to eq [my_bookmark]
+    end
+
+    it "returns current_user bookmarks regardless of id" do
+      my_bookmark
+      get :show, id: 500
       expect(assigns(:user_bookmarks)).to eq [my_bookmark]
     end
 
     it "returns my_users liked bookmarks" do
-      like = my_user.likes.where(bookmark: my_bookmark).create
-      get :show, user_id: my_user.id, boookmark_id: my_bookmark.id, id: like.id
+      like = my_user.likes.create(bookmark_id: my_bookmark.id)
+      # /users/:id
+      get :show, id: like.id
       expect(assigns(:user_liked_bookmarks)).to eq [my_bookmark]
     end
   end
-
 
 end
